@@ -2,14 +2,17 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-// Called when the url of a tab changes.
-function checkForValidUrl(tabId, changeInfo, tab) {
-  // If the letter 'g' is found in the tab's URL...
-  //if (tab.url.indexOf('g') > -1) {
-    // ... show the page action.
-    chrome.pageAction.show(tabId);
-  //}
-}
+var api_key = '4c5T9V85ga3c6J4a5adbyWoL25p0ypr2'
+var later = new Later();
 
 // Listen for any changes to the URL of any tab.
-chrome.tabs.onUpdated.addListener(checkForValidUrl);
+chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
+    // Allways show our pageAction.
+    chrome.pageAction.show(tabId);
+});
+
+
+// Called when the user clicks on the page action
+chrome.pageAction.onClicked.addListener(function(tab) {
+    later.add(tab.url);   
+});

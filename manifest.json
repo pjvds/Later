@@ -1,8 +1,7 @@
 {
   "name": "Later!",
-  
+  "options_page": "pages/options.html",
   "version": "0.1",
-  
   "description": "Adds the ability to add a page to Read It Later.",
   "background_page": "pages/background.html",
   
@@ -15,8 +14,8 @@
   "permissions" :
   [ 
       "http://*/*", 
-      "https://*/*", 
-      "bookmarks", "tabs"
+      "https://*/*",   
+      "tabs"
   ],
   
   "icons" : {
