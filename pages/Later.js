@@ -1,48 +1,35 @@
-function Later(apikey)
+function Later(apikey, notAuthenticatedCallback, authenticatedCallback)
 {
     var STATUS = { 
-        OK        = 200
-        CREATED   = 201,
-        BAD       = 400,
-        FORBIDDEN = 403,
-        ERROR     = 500 
+        "OK"        : 200
+        "CREATED"   : 201,
+        "BAD"       : 400,
+        "FORBIDDEN" : 403,
+        "ERROR"     : 500 
     };
-    
-    var _apikey = (apikey === null ? '4c5T9V85ga3c6J4a5adbyWoL25p0ypr2' : apikey);
-    
+     
     this.add = function(url) {
-        var apiUri = 'https://readitlaterlist.com/v2/add'
-        var data = { 
-            apikey: _apikey,
-            username: _username,
-            password: _password,
-            url: url
+        if(!isAuthenticated()) {
+          notAuthenticatedCallback();
+        } 
+        else {
+          var apiUri = 'https://readitlaterlist.com/v2/add'
+          var data = { 
+              apikey: _apikey,
+              username: _username,
+              password: _password,
+              url: url
+          }
+          
+          $.post(apiUri, data)
+              .success(function() { alert("second success"); })
+              .error(function() { alert("error"); })
+              .complete(function() { alert("complete"); });
         }
-        
-        $.post(apiUri, data)
-            .success(function() { alert("second success"); })
-            .error(function() { alert("error"); })
-            .complete(function() { alert("complete"); });
     };
     
     this.isAuthenticated = function() {
-        if(localStorage["authenticated"] !== STATUS.ERROR){
-            if(localStorage["authenticated"]) {
-                return true;
-            }else{
-                return false;
-            }
-        }
-        
-        localStorage["authenticated"] = STATUS.ERROR;
-        
-        if(localStorage["username"] !== undefined && 
-           localStorage["password"] !== undefined) {
-            
-        }
-        else {
-            return false;
-        }            
+        return false;
     };
     
     this.authenticate = function(username, password, onSuccess, onError) {
@@ -59,5 +46,7 @@ function Later(apikey)
         $.post(apiUri, data)
             .success(function(response) { alert("auth success"); if(onSuccess !== undefined) onSuccess(); })
             .error(function(response) { alert("auth error"); if(onError !== undefined) onError(); })
-    }
+    };
+    
+    if(!isAuthenticated()) { notAuthenticatedCallback() );
 }
