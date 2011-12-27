@@ -11,11 +11,7 @@
                 "popup": "assets/popup.html"
         },
         
-        "permissions": [
-                "tabs",
-                "http://*/*",
-                "https://*/*"
-        ],
+        "permissions": [ "http://*/*", "https://*/*", "bookmarks", "tabs"]
         
         "background_page": "pages/background.html",
         
