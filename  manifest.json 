@@ -1,0 +1,32 @@
+{
+        "name": "Later!",
+        
+        "version": "0.1",
+        
+        "description": "Add items to your Read It Later reading list",
+        
+        "page_action": {
+                "default_icon": "icon16.png",
+                "default_title": "Add to Read It Later",
+                "popup": "popup.html"
+        },
+        
+        "permissions": [
+                "tabs",
+                "http://*/*",
+                "https://*/*"
+        ],
+        
+        "background_page": "background.html",
+        
+        "options_page": "options.html",
+        
+        "icons": {
+                "48": "icon48.png",
+                "128": "icon128.png"
+        },
+        
+        "content_scripts": [ {
+      "matches": [ "http://*/*", "https://*/*" ]
+   } ]
+}
