@@ -1,19 +1,28 @@
 {
   "name": "Later!",
+  
   "version": "0.1",
+  
   "description": "Adds the ability to add a page to Read It Later.",
   "background_page": "pages/background.html",
+  
   "page_action" :
   {
     "default_icon" : "assets/icon16.png",
     "default_title" : "Add to Read It Later!"
   },
-  "permissions" : [
-    "tabs"
+  
+  "permissions" :
+  [ 
+      "http://*/*", 
+      "https://*/*", 
+      "bookmarks", "tabs"
   ],
+  
   "icons" : {
     "48" : "assets/icon48.png",
     "128" : "assets/icon128.png"
   },
+  
   "content_security_policy": "script-src 'self'"
 }
