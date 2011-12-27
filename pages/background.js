@@ -3,38 +3,35 @@
 // found in the LICENSE file.
 
 var _later;
+var _currentTabId;
 
 this.init = function() {
-  _later = new Later('4c5T9V85ga3c6J4a5adbyWoL25p0ypr2', setPopup, clearPopup);
+  _later = new Later('4c5T9V85ga3c6J4a5adbyWoL25p0ypr2', this.setPopup, this.clearPopup);
 }
 
 this.setPopup = function() {
-  chrome.tabs.getCurrent(function(tab){
-    chrome.pageAction.setPopup({
-        'tabId':     localStorage["currentTabId"],
-        'popup':    'popup.html'
-    });
+  alert('setting popup...'+_currentTabId);
+  
+  chrome.pageAction.setPopup({
+      'tabId':     _currentTabId,
+      'popup':    'pages/popup.html'
+  });
     
-    alert('popup set!');
-  })
+  alert('popup set!');
 }
 
 this.clearPopup = function() {
-  chrome.tabs.getCurrent(function(tab){
-    chrome.pageAction.setPopup({
-        'tabId':     localStorage["currentTabId"],
-        'popup':    ''
-    });
-  })
+  chrome.pageAction.setPopup({
+      'tabId':     _currentTabId,
+      'popup':    ''
+  });
   
   alert('popup cleared!');
 }
 
 handleTabEvents = function(tab) {
   chrome.pageAction.show(tab.id || tab);
-  localStorage["currentTabId"] = tab.id || tab;
-  
-  alert('Tab id set: '+localStorage["currentTabId"]);
+  _currentTabId = tab.id || tab;
 }
 
 // Listen for any changes to the URL of any tab.
@@ -45,11 +42,7 @@ chrome.tabs.getSelected(null, handleTabEvents);
 
 // Called when the user clicks on the page action
 chrome.pageAction.onClicked.addListener(function(tab) {
-    //if(_later.isAuthenticated()) {
-    alert('click!');
-    //} else {
-    //  alert('no auth!');
-    //}
+    _later.add(tab.url);
 });
 
 window.addEventListener( 'load', function() {
