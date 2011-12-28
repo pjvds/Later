@@ -1,7 +1,3 @@
-// Copyright (c) 2011 Craftify. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
-
 var _later;
 var _currentTabId;
 
@@ -10,14 +6,10 @@ this.init = function() {
 }
 
 this.setPopup = function() {
-  alert('setting popup...'+_currentTabId);
-  
   chrome.pageAction.setPopup({
       'tabId':     _currentTabId,
       'popup':    'pages/popup.html'
   });
-    
-  alert('popup set!');
 }
 
 this.clearPopup = function() {
@@ -25,20 +17,18 @@ this.clearPopup = function() {
       'tabId':     _currentTabId,
       'popup':    ''
   });
-  
-  alert('popup cleared!');
 }
 
-handleTabEvents = function(tab) {
+this.tabChangedHandler = function(tab) {
   chrome.pageAction.show(tab.id || tab);
   _currentTabId = tab.id || tab;
 }
 
 // Listen for any changes to the URL of any tab.
-chrome.tabs.onUpdated.addListener(handleTabEvents);
-chrome.tabs.onSelectionChanged.addListener(handleTabEvents);
-chrome.tabs.onUpdated.addListener(handleTabEvents);
-chrome.tabs.getSelected(null, handleTabEvents);
+chrome.tabs.onUpdated.addListener(tabChangedHandler);
+chrome.tabs.onSelectionChanged.addListener(tabChangedHandler);
+chrome.tabs.onUpdated.addListener(tabChangedHandler);
+chrome.tabs.getSelected(null, tabChangedHandler);
 
 // Called when the user clicks on the page action
 chrome.pageAction.onClicked.addListener(function(tab) {
