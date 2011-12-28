@@ -1,49 +1,17 @@
-var Later = ( function() {
+var Later = function () {
+    "use strict";
+
     var APIKEY = '4c5T9V85ga3c6J4a5adbyWoL25p0ypr2',
         STATUS = {
-        "OK":200,
-        "CREATED":201,
-        "BAD":400,
-        "FORBIDDEN":403,
-        "ERROR":500
-    };
-
-    function add(url, onSuccess, onAuthFirst, onError) {
-        if (!isAuthenticated()) {
-            // Invoke auth required callback; if exits.
-            if(onAuthFirst) onAuthFirst();
-            return;
-        }
-
-        var apiUrl = 'https://readitlaterlist.com/v2/add';
-        var data = {
-            apikey : APIKEY,
-            username : localStorage["username"],
-            password : localStorage["password"],
-            url : url };
-
-        var req = $.post(apiUrl, data).complete(function() {
-            switch(reg.status){
-                case STATUS.OK:
-                    if(onSuccess) onSuccess();
-                    break;
-                case STATUS.FORBIDDEN:
-                    _isAuth = false;
-                    if(onError) onError(reg);
-                    break;
-                case STATUS.ERROR:
-                    _isAuth = false;
-                    if(onError) onError(reg);
-                    break;
-                default:
-                    if(onError) onError(reg);
-                    break;
-            }
-        });
-    }
+            OK: 200,
+            CREATED: 201,
+            BAD: 400,
+            FORBIDDEN: 403,
+            ERROR: 500
+        };
 
     function authenticate(username, password, onSuccess, onError) {
-        alert("starting to auth...");
+        alert('starting to auth...');
 
 //        var apiUrl = 'https://readitlaterlist.com/v2/auth';
 //        var data = {
@@ -69,7 +37,7 @@ var Later = ( function() {
     }
 
     function isAuthenticated(onSuccess, onNoCredentatials, onError) {
-//        if(localStorage["isauthenticated"] === true) {
+//        if (localStorage["isauthenticated"] === true) {
 //            return true;
 //        }
 //
@@ -92,4 +60,36 @@ var Later = ( function() {
 //            return false;
 //        }
     }
-}() )
+
+    function add(url, onSuccess, onAuthFirst, onError) {
+        if (!isAuthenticated()) {
+            // Invoke auth required callback; if exits.
+            if (onAuthFirst) { onAuthFirst(); }
+            return;
+        }
+
+        var apiUrl = 'https://readitlaterlist.com/v2/add',
+            data = {
+            apikey : APIKEY,
+            username : localStorage['Later.username'],
+            password : localStorage['Later.password'],
+            url : url };
+
+        $.post(apiUrl, data).complete(function(reg) {
+            switch(reg.status){
+                case STATUS.OK:
+                    localStorage['Later.isauthenticated'] = true;
+                    if(onSuccess) { onSuccess(); }
+                    break;
+                case STATUS.FORBIDDEN:
+                    localStorage['Later.isauthenticated'] = undefined;
+                    if(onAuthFirst) { onAuthFirst(reg); }
+                    break;
+                case STATUS.ERROR:
+                    localStorage['Later.isauthenticated'] = undefined;
+                    if(onError) { onError(reg); }
+                    break;
+            }
+        });
+    }
+};
