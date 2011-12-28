@@ -1,27 +1,26 @@
 {
-  "name": "Later!",
-  "options_page": "options.html",
-  "version": "0.1",
-  "description": "Adds the ability to add a page to Read It Later.",
-  "background_page": "background.html",
-  
-  "page_action" :
-  {
-    "default_icon" : "icons/icon16.png",
-    "default_title" : "Add to Read It Later!"
-  },
-  
-  "permissions" :
-  [ 
-      "http://*/*", 
-      "https://*/*",   
-      "tabs"
-  ],
-  
-  "icons" : {
-    "48" : "icons/icon48.png",
-    "128" : "icons/icon128.png"
-  },
-  
-  "content_security_policy": "script-src 'self'"
+    "name":"Later!",
+    "options_page":"options.html",
+    "version":"0.1",
+    "description":"Adds the ability to add a page to Read It Later.",
+    "background_page":"background.html",
+
+    "page_action":{
+        "default_icon":"icons/icon16.png",
+        "default_title":"Add to Read It Later!",
+        "popup":"popup.html"
+    },
+
+    "permissions":[
+        "http://*/*",
+        "https://*/*",
+        "tabs"
+    ],
+
+    "icons":{
+        "48":"icons/icon48.png",
+        "128":"icons/icon128.png"
+    },
+
+    "content_security_policy":"script-src 'self'"
 }

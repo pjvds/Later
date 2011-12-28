@@ -1,87 +1,96 @@
 var _currentTabId;
 
-var STATUS = {
-    "IDLE":0,
-    "BOOKMARKED":1,
-    "FORBIDDEN":2,
-    "ERROR":3
-};
-
-this.setIcon = function(state) {
-    switch(state) {
-        case STATUS.IDLE:
-            chrome.pageAction.setIcon({ tabId: _currentTabId, path: "icons/status_idle.png"});
-            break;
-        case STATUS.BOOKMARKED:
-            chrome.pageAction.setIcon({ tabId: _currentTabId, path: "icons/status_bookmarked.png"});
-            break;
-        case STATUS.FORBIDDEN:
-            chrome.pageAction.setIcon({ tabId: _currentTabId, path: "icons/status_forbidden.png"});
-            break;
-        case STATUS.ERROR:
-            chrome.pageAction.setIcon({ tabId: _currentTabId, path: "icons/status_error.png"});
-            break;
+chrome.tabs.onUpdated.addListener(function(tabId) {
+    _currentTabId = tabId;
+    chrome.pageAction.show(tabId);
+    
+    if(ReadItLater.isAuthenticated() == false) {
+        console.log("popup set because user is not authenticated.")
+        setPopup();
+    } else {
+        console.log("popup cleared because user is authenticated.")
+        clearPopup();
     }
-}
 
-this.setPopup = function () {
+    chrome.pageAction.show(tabId);
+
+});
+
+function setPopup() {
     chrome.pageAction.setPopup({
-        'tabId':_currentTabId,
-        'popup':'popup.html'
+        tabId:_currentTabId,
+        popup:'popup.html'
     });
 }
 
-this.clearPopup = function () {
+function clearPopup() {
     chrome.pageAction.setPopup({
-        'tabId':_currentTabId,
-        'popup':''
+        tabId:_currentTabId,
+        popup:''
     });
 }
 
-this.tabChangedHandler = function (tab) {
-    chrome.pageAction.show(tab.id || tab);
-    _currentTabId = tab.id || tab;
-}
-
-// Listen for any changes to the URL of any tab.
-chrome.tabs.onUpdated.addListener(tabChangedHandler);
-chrome.tabs.onSelectionChanged.addListener(tabChangedHandler);
-chrome.tabs.onUpdated.addListener(tabChangedHandler);
-chrome.tabs.getSelected(null, tabChangedHandler);
-
-// Called when the user clicks on the page action
-chrome.pageAction.onClicked.addListener(function (tab) {
-    if(localStorage["username"] !== undefined && localStorage["password"] !== undefined) {
-        Later.add(tab.url,
-            this.markSuccess(),
-            this.markForbidden(),
-            this.markError());
-    }
-    else{
-        this.markForbidden();
-    }
-});
-
-this.markSuccess = function() {
-    setIcon(STATUS.BOOKMARKED);
-    clearPopup();
-}
-
-this.markError = function(error) {
-    setIcon(STATUS.ERROR);
-    setPopup();
-}
-
-this.markForbidden = function() {
-    setIcon(STATUS.FORBIDDEN);
-    setPopup();
-}
-
-this.markIdle = function() {
-    setIcon(STATUS.IDLE);
-    clearPopup();
-}
-
-window.addEventListener('load', function () {
-    this.markIdle();
-});
+//var _currentTabId;
+//
+//var STATUS = {
+//    "IDLE":0,
+//    "BOOKMARKED":1,
+//    "FORBIDDEN":2,
+//    "ERROR":3
+//};
+//
+//this.setIcon = function(state) {
+//    switch(state) {
+//        case STATUS.IDLE:
+//            chrome.pageAction.setIcon({ tabId: _currentTabId, path: "icons/status_idle.png"});
+//            break;
+//        case STATUS.BOOKMARKED:
+//            chrome.pageAction.setIcon({ tabId: _currentTabId, path: "icons/status_bookmarked.png"});
+//            break;
+//        case STATUS.FORBIDDEN:
+//            chrome.pageAction.setIcon({ tabId: _currentTabId, path: "icons/status_forbidden.png"});
+//            break;
+//        case STATUS.ERROR:
+//            chrome.pageAction.setIcon({ tabId: _currentTabId, path: "icons/status_error.png"});
+//            break;
+//    }
+//}
+//
+//
+//
+//// Called when the user clicks on the page action
+//chrome.pageAction.onClicked.addListener(function (tab) {
+//    if(localStorage["username"] !== undefined && localStorage["password"] !== undefined) {
+//        Later.add(tab.url,
+//            this.markSuccess(),
+//            this.markForbidden(),
+//            this.markError());
+//    }
+//    else{
+//        this.markForbidden();
+//    }
+//});
+//
+//this.markSuccess = function() {
+//    setIcon(STATUS.BOOKMARKED);
+//    clearPopup();
+//}
+//
+//this.markError = function(error) {
+//    setIcon(STATUS.ERROR);
+//    setPopup();
+//}
+//
+//this.markForbidden = function() {
+//    setIcon(STATUS.FORBIDDEN);
+//    setPopup();
+//}
+//
+//this.markIdle = function() {
+//    setIcon(STATUS.IDLE);
+//    clearPopup();
+//}
+//
+//window.addEventListener('load', function () {
+//    this.markIdle();
+//});

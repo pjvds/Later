@@ -8,26 +8,41 @@ var ReadItLater = ( function () {
         STATUS_FORBIDDEN = 403,
         STATUS_ERROR = 500,
         KEY_IS_AUTH = 'Later.isAuth',
-        currentTabId;
 
-    function backgroundInit() {
-        var handleTab = function(tab) {
-            currentTabId = tab.id || tab;
-        };
-
-
-    }
-
-    function updateCurrentTabId(tab) {
-        currentTabId = tab.id || tab;
-    }
+        API_URI_AUTH = 'https://readitlaterlist.com/v2/auth';
 
     function isAuthenticated() {
-        alert('isAuthenticated');
         return localStorage(KEY_IS_AUTH) !== undefined;
     }
 
-    function authenticate(username, password) {
-        alert('authenticate');
+    function authenticate(username, password, onSuccess, onInvalidCredentials, onError) {
+        onSuccess = onSuccess || function(){};
+        onInvalidCredentials = onInvalidCredentials || function(){};
+        onError = onError || function(){};
+
+        var data = { apikey: APIKEY, username: username, password: password};
+
+        $.post(API_URI_AUTH, data)
+            .success(onSuccess)
+            .error(function(xhr, ajaxOptions, thrownError) {
+                if(xhr.status == 401) {
+                        onInvalidCredentials();
+                } else {
+                        onError(xhr.status+': '+xhr.statusText);
+                }
+            });
+    }
+
+    function addUrl(url) {
+        alert('add url!');
+
+        if(isAuthenticated() == false) {
+            throw new Error("Not authenticated");
+        }
+    }
+
+    return {
+        'isAuthenticated': isAuthenticated,
+        'authenticate': authenticate
     }
 } ());
