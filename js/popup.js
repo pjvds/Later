@@ -12,35 +12,17 @@ $(document).ready(function() {
         ReadItLater.authenticate(user, pass, function() {
             window.close();
         }, function() {
-            msg.text('Invalid username or password!').show();
+            notify('Invalid username or password!');
         }, function(error) {
-            msg.text('error: '+error).show();
+            notify('error: '+error);
         });
 
         e.preventDefault();
         e.stopPropagation();
         return false;
     });
-});
 
-//  var form =    document.getElementById('authForm'),
-//      user    = document.getElementById('username'),
-//      pass    = document.getElementById('password'),
-//      auth;
-//
-//  username.value = localStorage['username'] || "";
-//  password.value = localStorage['password'] || "";
-//
-//  form.addEventListener( 'submit', function ( e ) {
-//      alert('posting...');
-//
-//      Later.authenticate(user.value, pass.value,
-//          function() {
-//              alert('AUTH 200!');
-//          },
-//          function() {
-//              alert("ERROR!@#");
-//          });
-//
-//      return false;
-//  } );
+    notify = function(text) {
+        msg.text(text).show();
+    }
+});

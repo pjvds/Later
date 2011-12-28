@@ -8,6 +8,8 @@ var ReadItLater = ( function () {
         STATUS_FORBIDDEN = 403,
         STATUS_ERROR = 500,
         KEY_IS_AUTH = 'Later.isAuth',
+        KEY_USERNAME = 'Later.username',
+        KEY_PASSWORD = 'Later.password',
 
         API_URI_AUTH = 'https://readitlaterlist.com/v2/auth';
 
@@ -23,8 +25,18 @@ var ReadItLater = ( function () {
         var data = { apikey: APIKEY, username: username, password: password};
 
         $.post(API_URI_AUTH, data)
-            .success(onSuccess)
+            .success(function() {
+                localStorage[KEY_USERNAME] = username;
+                localStorage[KEY_PASSWORD] = password;
+                localStorage[KEY_IS_AUTH] = true;
+
+                onSuccess();
+            })
             .error(function(xhr, ajaxOptions, thrownError) {
+                localStorage[KEY_USERNAME] = undefined;
+                localStorage[KEY_PASSWORD] = undefined;
+                localStorage[KEY_IS_AUTH] = undefined;
+
                 if(xhr.status == 401) {
                         onInvalidCredentials();
                 } else {
