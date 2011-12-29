@@ -11,12 +11,13 @@ var ReadItLater = ( function () {
         KEY_IS_AUTH = 'Later.isAuth',
         KEY_USERNAME = 'Later.username',
         KEY_PASSWORD = 'Later.password',
+        IS_AUTH_VALUE = '1',
 
         API_URI_AUTH = 'https://readitlaterlist.com/v2/auth',
         API_URI_ADD = 'https://readitlaterlist.com/v2/add';
 
     function isAuthenticated() {
-        var result = (localStorage(KEY_IS_AUTH) == true);
+        var result = (localStorage[KEY_IS_AUTH] == IS_AUTH_VALUE);
         console.log("isAuthenticated: "+result);
 
         return result;
@@ -48,7 +49,7 @@ var ReadItLater = ( function () {
     function setAuthInfo(username, password) {
         localStorage[KEY_USERNAME] = username;
         localStorage[KEY_PASSWORD] = password;
-        localStorage[KEY_IS_AUTH] = true;
+        localStorage[KEY_IS_AUTH] = IS_AUTH_VALUE;
     }
 
     function clearAuthInfo() {
