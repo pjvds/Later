@@ -3,6 +3,10 @@ $(document).ready(function() {
     var password = $('#password');
     var msg = $('#msg');
 
+    var cred = ReadItLater.getCredentials();
+    username.val(cred.username);
+    password.val(cred.password);
+
     msg.hide();
 
     $('#authForm').submit(function(e) {

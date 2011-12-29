@@ -7,14 +7,19 @@ var ReadItLater = ( function () {
         STATUS_BAD = 400,
         STATUS_FORBIDDEN = 403,
         STATUS_ERROR = 500,
+
         KEY_IS_AUTH = 'Later.isAuth',
         KEY_USERNAME = 'Later.username',
         KEY_PASSWORD = 'Later.password',
 
-        API_URI_AUTH = 'https://readitlaterlist.com/v2/auth';
+        API_URI_AUTH = 'https://readitlaterlist.com/v2/auth',
+        API_URI_ADD = 'https://readitlaterlist.com/v2/add';
 
     function isAuthenticated() {
-        return localStorage(KEY_IS_AUTH) !== undefined;
+        var result = (localStorage(KEY_IS_AUTH) == true);
+        console.log("isAuthenticated: "+result);
+
+        return result;
     }
 
     function authenticate(username, password, onSuccess, onInvalidCredentials, onError) {
@@ -26,16 +31,11 @@ var ReadItLater = ( function () {
 
         $.post(API_URI_AUTH, data)
             .success(function() {
-                localStorage[KEY_USERNAME] = username;
-                localStorage[KEY_PASSWORD] = password;
-                localStorage[KEY_IS_AUTH] = true;
-
+                setAuthInfo(username, password);
                 onSuccess();
             })
             .error(function(xhr, ajaxOptions, thrownError) {
-                localStorage[KEY_USERNAME] = undefined;
-                localStorage[KEY_PASSWORD] = undefined;
-                localStorage[KEY_IS_AUTH] = undefined;
+                clearAuthInfo();
 
                 if(xhr.status == 401) {
                         onInvalidCredentials();
@@ -45,16 +45,48 @@ var ReadItLater = ( function () {
             });
     }
 
-    function addUrl(url) {
-        alert('add url!');
+    function setAuthInfo(username, password) {
+        localStorage[KEY_USERNAME] = username;
+        localStorage[KEY_PASSWORD] = password;
+        localStorage[KEY_IS_AUTH] = true;
+    }
 
+    function clearAuthInfo() {
+        localStorage[KEY_USERNAME] = undefined;
+        localStorage[KEY_PASSWORD] = undefined;
+        localStorage[KEY_IS_AUTH] = undefined;
+    }
+
+    function addUrl(url, onSuccess, onForbidden, onError) {
         if(isAuthenticated() == false) {
             throw new Error("Not authenticated");
         }
+
+        var cred = getCredentials();
+        var data = { 'apikey': APIKEY, 'username': cred.username,
+                     'password': cred.password, 'url': url};
+
+        $.post(API_URI_ADD, data)
+            .success(onSuccess)
+            .error(function(xhr, ajaxOptions, thrownError) {
+               if(xhr.status == STATUS_FORBIDDEN) {
+                   clearAuthInfo();
+                   onForbidden();
+               } else {
+                   onError(xhr.status+': '+xhr.statusText);
+               }
+            });
+    }
+
+    function getCredentials() {
+        return { 'username': localStorage[KEY_USERNAME],
+            'password': localStorage[KEY_PASSWORD] }
     }
 
     return {
         'isAuthenticated': isAuthenticated,
-        'authenticate': authenticate
+        'authenticate': authenticate,
+        'addUrl': addUrl,
+        'getCredentials': getCredentials
     }
 } ());
