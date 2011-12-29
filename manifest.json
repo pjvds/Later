@@ -7,8 +7,7 @@
 
     "page_action":{
         "default_icon":"icons/icon16.png",
-        "default_title":"Add to Read It Later!",
-        "popup":"popup.html"
+        "default_title":"Add to Read It Later!"
     },
 
     "permissions":[
