@@ -3,10 +3,7 @@ var ReadItLater = ( function () {
 
     var APIKEY = '4c5T9V85ga3c6J4a5adbyWoL25p0ypr2',
         STATUS_OK = 200,
-        STATUS_CREATED = 201,
-        STATUS_BAD = 400,
-        STATUS_FORBIDDEN = 403,
-        STATUS_ERROR = 500,
+        STATUS_FORBIDDEN = 401,
 
         KEY_IS_AUTH = 'Later.isAuth',
         KEY_USERNAME = 'Later.username',
@@ -30,17 +27,18 @@ var ReadItLater = ( function () {
 
         var data = { apikey: APIKEY, username: username, password: password};
 
-        $.post(API_URI_AUTH, data)
-            .success(function() {
-                setAuthInfo(username, password);
-                onSuccess();
-            })
-            .error(function(xhr, ajaxOptions, thrownError) {
-                clearAuthInfo();
-
-                if(xhr.status == 401) {
+        $.ajaxSetup({async:false});
+        $.post(API_URI_AUTH, data).complete(function(xhr) {
+                switch(xhr.status) {
+                    case STATUS_OK:
+                        setAuthInfo(username, password);
+                        onSuccess();
+                        break;
+                    case STATUS_FORBIDDEN:
+                        clearAuthInfo();
                         onInvalidCredentials();
-                } else {
+                        break;
+                    default:
                         onError(xhr.status+': '+xhr.statusText);
                 }
             });
@@ -53,9 +51,9 @@ var ReadItLater = ( function () {
     }
 
     function clearAuthInfo() {
-        localStorage[KEY_USERNAME] = undefined;
-        localStorage[KEY_PASSWORD] = undefined;
-        localStorage[KEY_IS_AUTH] = undefined;
+        localStorage.removeItem(KEY_USERNAME);
+        localStorage.removeItem(KEY_PASSWORD);
+        localStorage.removeItem(KEY_IS_AUTH);
     }
 
     function addUrl(url, onSuccess, onForbidden, onError) {
@@ -67,21 +65,29 @@ var ReadItLater = ( function () {
         var data = { 'apikey': APIKEY, 'username': cred.username,
                      'password': cred.password, 'url': url};
 
-        $.post(API_URI_ADD, data)
-            .success(onSuccess)
-            .error(function(xhr, ajaxOptions, thrownError) {
-               if(xhr.status == STATUS_FORBIDDEN) {
-                   clearAuthInfo();
-                   onForbidden();
-               } else {
-                   onError(xhr.status+': '+xhr.statusText);
-               }
+        $.ajaxSetup({async:false});
+        $.post(API_URI_ADD, data).complete(function(xhr) {
+                switch(xhr.status) {
+                    case STATUS_OK:
+                        onSuccess();
+                        break;
+                    case STATUS_FORBIDDEN:
+                        clearAuthInfo();
+                        onForbidden();
+                        break;
+                    default:
+                        onError(xhr.status+': '+xhr.statusText);
+                }
             });
     }
 
     function getCredentials() {
-        return { 'username': localStorage[KEY_USERNAME],
-            'password': localStorage[KEY_PASSWORD] }
+        if(localStorage[KEY_USERNAME] !== undefined && localStorage[KEY_PASSWORD] !== undefined) {
+            return { 'username': localStorage[KEY_USERNAME],
+                'password': localStorage[KEY_PASSWORD] }
+        } else {
+            return undefined;
+        }
     }
 
     return {

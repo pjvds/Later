@@ -6,13 +6,21 @@ var LaterPageAction = ( function() {
         STATUS_FORBIDDEN = '2',   // localStorage which makes a string
         STATUS_ERROR = '3',       // value when storing a int value.
         KEY_STATE='Later.state',  // This way we prevent conversion.
-        currentTabId;
+        KEY_TAB_ID='Later.currentTabId';
+
+    function getCurrentTabId() {
+        return parseInt(localStorage[KEY_TAB_ID]);
+    }
+
+    function setCurrentTabId(tabId) {
+        localStorage[KEY_TAB_ID]=tabId;
+    }
 
     function init() {
         chrome.tabs.onUpdated.addListener(tabChangedHandler);
         chrome.pageAction.onClicked.addListener(pageActionClickHandler);
 
-        changeState(STATUS_IDLE);
+        localStorage[KEY_STATE]=STATUS_IDLE;
     }
 
     function authenticate(username, password, onSuccess, onInvalidCredentials, onError) {
@@ -21,78 +29,90 @@ var LaterPageAction = ( function() {
 
             onSuccess();
         }, function () {
-            changeState(STATUS_FORBIDDEN);
+            changeState(STATUS_FORBIDDEN, 'Invalid username or password');
 
             onInvalidCredentials();
-        }, function (e) {
-            changeState(STATUS_ERROR);
+        }, function (error) {
+            changeState(STATUS_ERROR, error);
 
-            onError(e);
+            onError(error);
         })
     }
 
     function tabChangedHandler(tab) {
-        currentTabId = tab.id || tab;
-        chrome.pageAction.show(currentTabId);
+        var tabId = tab.id || tab;
+//        var state = localStorage[KEY_STATE];
 
-        setStateForCurrentTab();
+//        if(currentTabId != tabId && state == STATUS_BOOKMARKED) {
+//            changeState(STATUS_IDLE);
+//        }
+
+        setCurrentTabId(tabId);
+        chrome.pageAction.show(tabId);
+
+//        setStateForCurrentTab();
     }
 
     function pageActionClickHandler(tab) {
-        alert('klick!!');
-
         if(ReadItLater.isAuthenticated()) {
-            alert('authed... adding now!!');
             try
             {
                 ReadItLater.addUrl(tab.url,
                     function() { changeState(STATUS_BOOKMARKED); },
-                    function() { changeState(STATUS_FORBIDDEN); },
-                    function(e) { changeState(STATUS_ERROR); });
+                    function() { changeState(STATUS_FORBIDDEN, 'Invalid username or password'); },
+                    function(error) { changeState(STATUS_ERROR, error); });
             }
             catch(error)
             {
-                changeState(STATUS_ERROR);
+                changeState(STATUS_ERROR, error);
             }
         } else {
-            alert('forbidden!!');
-            changeState(STATUS_FORBIDDEN);
+            changeState(STATUS_FORBIDDEN, 'Invalid username or password');
         }
     }
 
     function changeState(state) {
+        changeState(state, undefined);
+    }
+
+    function changeState(state, errorMessage) {
         localStorage[KEY_STATE] = state;
         setStateForCurrentTab();
+
+        if(errorMessage !== undefined) {
+            Notification.setMessage(errorMessage);
+        }
     }
 
     function setStateForCurrentTab() {
         var state = localStorage[KEY_STATE];
+        var currentTabId = getCurrentTabId();
 
         switch(state) {
             case STATUS_IDLE:
                 chrome.pageAction.setIcon({ tabId: currentTabId, path: "icons/status_idle.png"});
-                clearPopup();
+                clearPopup(currentTabId);
                 break;
             case STATUS_BOOKMARKED:
                 chrome.pageAction.setIcon({ tabId: currentTabId, path: "icons/status_bookmarked.png"});
-                clearPopup();
+                clearPopup(currentTabId);
                 break;
             case STATUS_FORBIDDEN:
                 chrome.pageAction.setIcon({ tabId: currentTabId, path: "icons/status_forbidden.png"});
-                setPopup();
+                setPopup(currentTabId);
                 break;
             case STATUS_ERROR:
                 chrome.pageAction.setIcon({ tabId: currentTabId, path: "icons/status_error.png"});
-                setPopup();
+                setPopup(currentTabId);
                 break;
         }
     }
 
-    function setPopup() {
-        chrome.pageAction.setPopup({'tabId': currentTabId, popup: 'popup.html'});
+    function setPopup(tabId) {
+        chrome.pageAction.setPopup({'tabId': tabId, popup: 'popup.html'});
     }
-    function clearPopup() {
-        chrome.pageAction.setPopup({'tabId': currentTabId, popup: ''});
+    function clearPopup(tabId) {
+        chrome.pageAction.setPopup({'tabId': tabId, popup: ''});
     }
 
     return {

@@ -4,8 +4,11 @@
     <list default="true" id="9cc172b4-1bc3-4fe9-81b9-53e39297583b" name="Default" comment="">
       <change type="DELETED" beforePath="C:\Projects\Later-\ manifest.json " afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/background.html" afterPath="$PROJECT_DIR$/background.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/LaterPageAction.js" afterPath="$PROJECT_DIR$/js/LaterPageAction.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/ReadItLater.js" afterPath="$PROJECT_DIR$/js/ReadItLater.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/popup.js" afterPath="$PROJECT_DIR$/js/popup.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/popup.html" afterPath="$PROJECT_DIR$/popup.html" />
     </list>
     <ignored path="Later-.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -39,7 +42,7 @@
       <file leaf-file-name="ReadItLater.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/ReadItLater.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="25" column="86" selection-start="758" selection-end="787" vertical-scroll-proportion="0.0">
+            <state line="6" column="0" selection-start="163" selection-end="163" vertical-scroll-proportion="6.12">
               <folding />
             </state>
           </provider>
@@ -63,10 +66,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="LaterPageAction.js" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="LaterPageAction.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/js/LaterPageAction.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="99" column="36" selection-start="3155" selection-end="3155" vertical-scroll-proportion="0.0">
+            <state line="58" column="13" selection-start="1786" selection-end="1786" vertical-scroll-proportion="0.46258503">
               <folding />
             </state>
           </provider>
@@ -75,7 +78,7 @@
       <file leaf-file-name="background.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/background.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="31" selection-start="281" selection-end="281" vertical-scroll-proportion="-5.8846154">
+            <state line="14" column="7" selection-start="455" selection-end="455" vertical-scroll-proportion="-9.153846">
               <folding />
             </state>
           </provider>
@@ -84,16 +87,16 @@
       <file leaf-file-name="popup.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/popup.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="5" column="25" selection-start="184" selection-end="184" vertical-scroll-proportion="-3.2692308">
+            <state line="5" column="39" selection-start="199" selection-end="199" vertical-scroll-proportion="-3.2692308">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="popup.js" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="popup.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/popup.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="21" column="11" selection-start="601" selection-end="601" vertical-scroll-proportion="0.5823817">
+            <state line="26" column="61" selection-start="668" selection-end="668" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -133,14 +136,14 @@
     <option name="changedFiles">
       <list>
         <option value="$PROJECT_DIR$/README.md" />
-        <option value="$PROJECT_DIR$/popup.html" />
         <option value="$PROJECT_DIR$/manifest.json" />
         <option value="$PROJECT_DIR$/js/Later.js" />
         <option value="$PROJECT_DIR$/js/background.js" />
         <option value="$PROJECT_DIR$/background.html" />
-        <option value="$PROJECT_DIR$/js/ReadItLater.js" />
         <option value="$PROJECT_DIR$/js/popup.js" />
+        <option value="$PROJECT_DIR$/popup.html" />
         <option value="$PROJECT_DIR$/js/LaterPageAction.js" />
+        <option value="$PROJECT_DIR$/js/ReadItLater.js" />
       </list>
     </option>
   </component>
@@ -383,30 +386,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/jquery-1.7.1.min.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="2579" column="9" selection-start="139597" selection-end="139597" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/options.html">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/popup.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="25" selection-start="184" selection-end="184" vertical-scroll-proportion="-3.2692308">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/Notification.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="44" selection-start="195" selection-end="195" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -425,30 +407,51 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/js/Notification.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="44" selection-start="195" selection-end="195" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/background.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="31" selection-start="281" selection-end="281" vertical-scroll-proportion="-5.8846154">
+        <state line="14" column="7" selection-start="455" selection-end="455" vertical-scroll-proportion="-9.153846">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/popup.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="5" column="39" selection-start="199" selection-end="199" vertical-scroll-proportion="-3.2692308">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/jquery-1.7.1.min.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2579" column="9" selection-start="139597" selection-end="139597" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/js/ReadItLater.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="86" selection-start="758" selection-end="787" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/LaterPageAction.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="99" column="36" selection-start="3155" selection-end="3155" vertical-scroll-proportion="0.0">
+        <state line="6" column="0" selection-start="163" selection-end="163" vertical-scroll-proportion="6.12">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/js/popup.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="11" selection-start="601" selection-end="601" vertical-scroll-proportion="0.5823817">
+        <state line="26" column="61" selection-start="668" selection-end="668" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/LaterPageAction.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="58" column="13" selection-start="1786" selection-end="1786" vertical-scroll-proportion="0.46258503">
           <folding />
         </state>
       </provider>
