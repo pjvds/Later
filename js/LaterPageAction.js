@@ -15,6 +15,22 @@ var LaterPageAction = ( function() {
         changeState(STATUS_IDLE);
     }
 
+    function authenticate(username, password, onSuccess, onInvalidCredentials, onError) {
+        ReadItLater.authenticate(username, password,function () {
+            changeState(STATUS_IDLE);
+
+            onSuccess();
+        }, function () {
+            changeState(STATUS_FORBIDDEN);
+
+            onInvalidCredentials();
+        }, function (e) {
+            changeState(STATUS_ERROR);
+
+            onError(e);
+        })
+    }
+
     function tabChangedHandler(tab) {
         currentTabId = tab.id || tab;
         chrome.pageAction.show(currentTabId);
@@ -80,6 +96,7 @@ var LaterPageAction = ( function() {
     }
 
     return {
-        'init': init
+        'init': init,
+        'authenticate': authenticate
     }
 } ())

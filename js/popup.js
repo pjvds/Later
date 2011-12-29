@@ -13,7 +13,7 @@ $(document).ready(function() {
         var user = username.val();
         var pass = password.val();
 
-        ReadItLater.authenticate(user, pass, function() {
+        Later.authenticate(user, pass, function() {
             window.close();
         }, function() {
             notify('Invalid username or password!');
