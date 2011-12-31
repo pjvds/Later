@@ -18,11 +18,8 @@ var LaterPageAction = ( function() {
 
     function init() {
         chrome.tabs.onUpdated.addListener(tabChangedHandler);
-        chrome.tab.onActiveChanged.addListeren(tabChangedHandler);
-        chrome.pageAction.onClicked.addListener(function(tab){
-            pageActionClickHandler(tab);
-            tabChangedHandler(tab)
-        });
+        chrome.tabs.onActiveChanged.addListener(tabChangedHandler);
+        chrome.pageAction.onClicked.addListener(pageActionClickHandler(tab));
 
         localStorage[KEY_STATE]=STATUS_IDLE;
     }
@@ -45,12 +42,13 @@ var LaterPageAction = ( function() {
 
     function tabChangedHandler(tab) {
         var tabId = tab.id || tab;
-
         setCurrentTabId(tabId);
         chrome.pageAction.show(tabId);
     }
 
     function pageActionClickHandler(tab) {
+        setCurrentTabId(tab.id);
+
         if(ReadItLater.isAuthenticated()) {
             try
             {
