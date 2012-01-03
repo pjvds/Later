@@ -22,7 +22,5 @@
         "128":"icons/icon128.png"
     },
 
-    "offline_enabled":"false",
-
     "content_security_policy":"script-src 'self'"
 }

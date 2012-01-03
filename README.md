@@ -5,18 +5,6 @@ It adds a small icon to the address bar that you can click to mark the current p
 
 ## Features
 
-* Plain dead simple! Just click and forget.
-* Intuitive! Feedback given by icons, no pop ups or other annoying things.
-* Configuration-less! We have big configuration screens as much as you do.
-
-## Installation
-
-**TODO: ADD INSTALLATION INFO HERE**
-
-## Technical
-
-Later! is build with HTML, Javascript and uses the Chrome.* API's.
-
-## More info
-
-Find more at: [later.craftify.nl](http://later.craftify.nl).
+1. Plain dead simple! Just click and forget.
+2. Intuitive! Feedback given by icons, no pop ups or other annoying things.
+3. Configuration-less! We hate big configuration screens as much as you do.

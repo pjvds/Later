@@ -19,7 +19,7 @@ var LaterPageAction = ( function() {
     function init() {
         chrome.tabs.onUpdated.addListener(tabChangedHandler);
         chrome.tabs.onActiveChanged.addListener(tabChangedHandler);
-        chrome.pageAction.onClicked.addListener(pageActionClickHandler(tab));
+        chrome.pageAction.onClicked.addListener(pageActionClickHandler);
 
         localStorage[KEY_STATE]=STATUS_IDLE;
     }
