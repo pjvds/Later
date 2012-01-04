@@ -15,12 +15,11 @@ $(document).ready(function() {
     } else {
         msg.hide();
     }
-
-    $(document).unload(function() {
-        Notification.clearMessage();
-    })
     
     $('#authForm').submit(function(e) {
+        Notification.clearMessage();
+        msg.hide();
+
         var user = username.val();
         var pass = password.val();
 
@@ -35,10 +34,14 @@ $(document).ready(function() {
         e.preventDefault();
         e.stopPropagation();
         return false;
-    });
+    })
 
     notify = function(text) {
         Notification.setMessage(text);
         msg.text(text).show();
     }
 });
+
+window.addEventListener("unload", function() {
+    Notification.clearMessage();
+}, false);

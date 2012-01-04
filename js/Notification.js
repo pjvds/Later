@@ -17,7 +17,7 @@ var Notification = ( function () {
     }
 
     function clearMessage() {
-        localStorage[KEY_MESSAGE] = undefined;
+        localStorage.removeItem(KEY_MESSAGE);
     }
 
     return {
