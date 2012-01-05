@@ -1,7 +1,7 @@
 {
     "name":"Later!",
     "options_page":"options.html",
-    "version":"1.0",
+    "version":"1.0.1",
     "description":"Adds the ability to add a page to Read It Later.",
     "background_page":"background.html",
 
