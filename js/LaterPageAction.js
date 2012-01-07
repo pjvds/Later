@@ -65,7 +65,7 @@ var LaterPageAction = ( function() {
                 changeState(STATUS_ERROR, error);
             }
         } else {
-            changeState(STATUS_FORBIDDEN, 'Invalid username or password');
+            changeState(STATUS_FORBIDDEN);
         }
     }
 
