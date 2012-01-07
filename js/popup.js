@@ -11,14 +11,17 @@ $(document).ready(function() {
     }
 
     if(Notification.hasMessage()) {
-        msg.html(Notification.getMessage()).show();
+        $('#msg').html(Notification.getMessage()).show();
     } else {
-        msg.hide();
+        $('#msg').hide();
     }
     
     $('#authForm').submit(function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+
         Notification.clearMessage();
-        msg.hide();
+        msg.hide(0);
 
         var user = username.val();
         var pass = password.val();
@@ -31,14 +34,15 @@ $(document).ready(function() {
             notify('error: '+error);
         });
 
-        e.preventDefault();
-        e.stopPropagation();
         return false;
     })
 
     notify = function(text) {
+        msg.visible().hide('fast');
+
         Notification.setMessage(text);
-        msg.text(text).show();
+        msg.text(text);
+        msg.show('fast');
     }
 });
 
