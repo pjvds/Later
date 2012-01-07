@@ -27,7 +27,6 @@ var ReadItLater = ( function () {
 
         var data = { apikey: APIKEY, username: username, password: password};
 
-        $.ajaxSetup({async:false});
         $.post(API_URI_AUTH, data).complete(function(xhr) {
                 switch(xhr.status) {
                     case STATUS_OK:
@@ -65,7 +64,6 @@ var ReadItLater = ( function () {
         var data = { 'apikey': APIKEY, 'username': cred.username,
                      'password': cred.password, 'url': url};
 
-        $.ajaxSetup({async:false});
         $.post(API_URI_ADD, data).complete(function(xhr) {
                 switch(xhr.status) {
                     case STATUS_OK:

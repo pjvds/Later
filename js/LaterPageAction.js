@@ -5,7 +5,8 @@ var LaterPageAction = ( function() {
         STATUS_BOOKMARKED = '1',  // the value will be stored in the
         STATUS_FORBIDDEN = '2',   // localStorage which makes a string
         STATUS_ERROR = '3',       // value when storing a int value.
-        KEY_STATE='Later.state',  // This way we prevent conversion.
+        STATUS_WORKING = '4',     // This way we prevent conversion.
+        KEY_STATE='Later.state',
         KEY_TAB_ID='Later.currentTabId';
 
     function getCurrentTabId() {
@@ -52,6 +53,8 @@ var LaterPageAction = ( function() {
         if(ReadItLater.isAuthenticated()) {
             try
             {
+                changeState(STATUS_WORKING);
+
                 ReadItLater.addUrl(tab.url,
                     function() { changeState(STATUS_BOOKMARKED); },
                     function() { changeState(STATUS_FORBIDDEN, 'Invalid username or password'); },
@@ -99,6 +102,9 @@ var LaterPageAction = ( function() {
             case STATUS_ERROR:
                 chrome.pageAction.setIcon({ tabId: currentTabId, path: "icons/status_error.png"});
                 setPopup(currentTabId);
+                break;
+            case STATUS_WORKING:
+                chrome.pageAction.setIcon({ tabId: currentTabId, path: "icons/status_working.gif"});
                 break;
         }
     }

@@ -20,12 +20,14 @@ $(document).ready(function() {
         e.preventDefault();
         e.stopPropagation();
 
+        // clear message from ui
         Notification.clearMessage();
+        msg.text('');
         msg.hide(0);
 
+        // get credentials and authenticate
         var user = username.val();
         var pass = password.val();
-
         LaterPageAction.authenticate(user, pass, function() {
             window.close();
         }, function() {
