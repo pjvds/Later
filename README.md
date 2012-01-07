@@ -3,6 +3,11 @@
 Later! is a Chrome Extension that enables you to bookmark a page to Read It Later.
 It adds a small icon to the address bar that you can click to mark the current page for later reading.
 
+## Installation
+
+Visit [Later! in the Chrome Webstore](https://chrome.google.com/webstore/detail/pfmhcibekclcfajoeilfkegbkfloibdf)
+to add it to Chrome.
+
 ## Features
 
 1. Plain dead simple! Just click and forget.
